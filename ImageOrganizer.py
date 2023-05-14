@@ -77,8 +77,8 @@ class ImageOrganizer:
             print(f"Image {fname} moved from {oldFilename} to {newFilename} successfully\n")
 
 def main():
-    #org = ImageOrganizer("folder")
-    org = ImageOrganizer("H:\\Sridevi-iPhone\\DCIM")
+    org = ImageOrganizer("folder")
+    #org = ImageOrganizer("H:\\Sridevi-iPhone\\DCIM")
 
     #org.sort_by_yr_month()
     org.show_exif()
