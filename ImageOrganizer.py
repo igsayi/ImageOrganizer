@@ -13,7 +13,8 @@ from PIL import ExifTags, Image
 
 class ImageOrganizer:
     def __init__(self, dirname=""):
-        self.images = os.listdir(dirname)
+        self.images = [f for f in os.listdir(dirname) if f.lower().endswith(".jpg")] 
+        self.images.sort()
         self.dirname = dirname
 
     def preprocess_exif(self, data):
@@ -24,15 +25,16 @@ class ImageOrganizer:
 
     def show_exif(self):
         for fname in self.images:
+           # if fname.lower().endswith(".jpg"):
             oldFilename = os.path.join(self.dirname, fname)
             with Image.open(oldFilename) as img:
-                exif = img._getexif()
+                exif: dict = img._getexif()
                 tags = ExifTags.TAGS
 
-                for k, v in exif.items():
-                    print("Tag: ", k, "\tValue: ", v, "\tType: ", type(v), "\tTagName: ", tags.get(k))
-                print(exif[306])
-                print("weadfa")
+                #for k, v in exif.items():
+                #    print("Tag: ", k, "\tTagName: ", tags.get(k))  #"\tValue: ", v, "\tType: ", type(v), 
+                print(fname, "-", exif.get(36867))
+                #print("weadfa")
 
     def sort_by_yr_month(self):
         for fname in self.images:
@@ -61,15 +63,25 @@ class ImageOrganizer:
             # %p	Locale’s AM or PM.										AM, PM
 
             year = datetime.datetime.strptime(date, "%Y:%m:%d").strftime("%Y")
-            month = datetime.datetime.strptime(date, "%Y:%m:%d").strftime("%m")
+            month = datetime.datetime.strptime(date, "%Y:%m:%d").strftime("%y-%m")
 
-            newFilename = os.path.join(year, month, fname)
+            newFilename = os.path.join(self.dirname, year, month, fname)
 
-            if not os.path.isdir(year):
-                os.mkdir(year)
+            if not os.path.isdir(os.path.join(self.dirname, year)):
+                os.mkdir(os.path.join(self.dirname, year))
 
-            if not os.path.isdir(os.path.join(year, month)):
-                os.mkdir(os.path.join(year, month))
+            if not os.path.isdir(os.path.join(self.dirname, year, month)):
+                os.mkdir(os.path.join(self.dirname, year, month))
 
-            shutil.copy(oldFilename, newFilename)
+            shutil.move(oldFilename, newFilename)
             print(f"Image {fname} moved from {oldFilename} to {newFilename} successfully\n")
+
+def main():
+    #org = ImageOrganizer("folder")
+    org = ImageOrganizer("H:\\Sridevi-iPhone\\DCIM")
+
+    #org.sort_by_yr_month()
+    org.show_exif()
+
+if __name__ == "__main__":
+    main()
