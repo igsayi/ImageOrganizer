@@ -6,10 +6,9 @@
 
 ## Usage
 
-    python main.py
+    python ImageOrganizer.py
 
 ## Available Functions
 
-
 - sort_by_yr_month (Sorts by Year and Month)
-
+- show_exif 
