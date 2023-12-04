@@ -13,31 +13,31 @@ from PIL import ExifTags, Image
 
 class ImageOrganizer:
     def __init__(self, dirname=""):
-        self.images = [f for f in os.listdir(dirname) if f.lower().endswith(".jpg")] 
+        self.images = [f for f in os.listdir(dirname) if f.lower().endswith(".jpg")]
         self.images.sort()
         self.dirname = dirname
 
     def preprocess_exif(self, data):
         data = data.strip()
         data = data.strip("\x00")
-
         return data
 
     def show_exif(self):
         for fname in self.images:
-           # if fname.lower().endswith(".jpg"):
+            # if fname.lower().endswith(".jpg"):
             oldFilename = os.path.join(self.dirname, fname)
             with Image.open(oldFilename) as img:
                 exif: dict = img._getexif()
-                tags = ExifTags.TAGS
-
-                #for k, v in exif.items():
-                #    print("Tag: ", k, "\tTagName: ", tags.get(k))  #"\tValue: ", v, "\tType: ", type(v), 
                 print(fname, "-", exif.get(36867))
-                #print("weadfa")
+
+                # to print all the available tags - refer to the tags.txt file
+                # tags = ExifTags.TAGS
+                # for k, v in exif.items():
+                #    print("Tag: ", k, "\tTagName: ", tags.get(k))  #"\tValue: ", v, "\tType: ", type(v),
 
     def sort_by_yr_month(self):
         for fname in self.images:
+
             oldFilename = os.path.join(self.dirname, fname)
             with Image.open(oldFilename) as img:
                 exif = img._getexif()
@@ -73,15 +73,17 @@ class ImageOrganizer:
             if not os.path.isdir(os.path.join(self.dirname, year, month)):
                 os.mkdir(os.path.join(self.dirname, year, month))
 
-            shutil.move(oldFilename, newFilename)
-            print(f"Image {fname} moved from {oldFilename} to {newFilename} successfully\n")
+            # shutil.move(oldFilename, newFilename)
+            print(f"{fname} move from {oldFilename} to {newFilename} success\n")
+
 
 def main():
-    org = ImageOrganizer("folder")
-    #org = ImageOrganizer("H:\\Sridevi-iPhone\\DCIM")
+    # org = ImageOrganizer("folder")
+    org = ImageOrganizer("C:\\Users\\igsay\\Downloads\\Photos")
 
-    #org.sort_by_yr_month()
+    # org.sort_by_yr_month()
     org.show_exif()
+
 
 if __name__ == "__main__":
     main()
