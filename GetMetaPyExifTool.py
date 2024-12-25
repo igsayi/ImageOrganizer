@@ -27,6 +27,8 @@ with ExifToolHelper() as et:
                 tagName = "QuickTime:CreationDate"
             case "MP4":
                 tagName = "QuickTime:CreateDate"
+            case "3GP":
+                tagName = "QuickTime:CreateDate"
             case "AAE":
                 tagName = "PLIST:AdjustmentTimestamp"
             case _:

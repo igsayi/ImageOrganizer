@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 
-@author: 
+@author:
 """
 
 import datetime
@@ -79,7 +79,7 @@ class ImageOrganizer:
 
 def main():
     # org = ImageOrganizer("folder")
-    org = ImageOrganizer("C:\\Users\\igsay\\Downloads\\Photos")
+    org = ImageOrganizer("C:\\Users\\igsay\\Downloads\\Photos\\sayi")
 
     # org.sort_by_yr_month()
     org.show_exif()
