@@ -4,11 +4,13 @@ from datetime import datetime
 
 from exiftool import ExifToolHelper
 
-sfolderName: str = "C:\\Users\\igsay\\Downloads\\Photos"
+sfolderName: str = "C:\\Users\\igsay\\Downloads\\Photos\\sayi"
 dfolderName: str = "C:\\Users\\igsay\\Downloads\\Photos"
 
 with ExifToolHelper() as et:
-    for d in et.get_tags(sfolderName, tags=[]):  # "File:FileName", "File:FileType", "XMP:CreateDate", "EXIF:DateTimeOriginal"
+    for d in et.get_tags(
+        sfolderName, tags=[]
+    ):  # "File:FileName", "File:FileType", "XMP:CreateDate", "EXIF:DateTimeOriginal"
         fName: str = d.get("File:FileName")
         oldFilename = os.path.join(sfolderName, fName)
         tagName: str = ""
@@ -33,7 +35,13 @@ with ExifToolHelper() as et:
         # for k, v in d.items():
         #     print(f"Dict: {k} = {v}")
 
-        dt: str = d.get(tagName) if d.get(tagName) else d.get(fallBackTagName1) if d.get(fallBackTagName1) else d.get(fallBackTagName2)
+        dt: str = (
+            d.get(tagName)
+            if d.get(tagName)
+            else d.get(fallBackTagName1)
+            if d.get(fallBackTagName1)
+            else d.get(fallBackTagName2)
+        )
         # if dt is not None or dt == fName:
         #     print(f"Dict: {fName} = {dt}")
         fdate = dt.split(" ")[0]
